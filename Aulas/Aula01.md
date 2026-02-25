@@ -75,17 +75,13 @@ Uma classe funciona como o "molde" para o nosso TAD. Nela, definimos como os dad
 ```python
 class ContaCorrente:
     def __init__(self, agencia, conta, saldo_inicial=0):
-        """
-        Operação de Inicialização: Define os dados iniciais do TAD.
-        """
+        """Operação de Inicialização: Define os dados iniciais do TAD."""
         self.agencia = agencia
         self.conta = conta
         self.__saldo = saldo_inicial  # O prefixo '__' indica que o dado é privado (encapsulamento)
 
     def depositar(self, valor):
-        """
-        Operação de Depósito: Atualiza a variável interna saldo.
-        """
+        """Operação de Depósito: Atualiza a variável interna saldo."""
         if valor > 0:
             self.__saldo += valor
             print(f"Depósito de R$ {valor} realizado com sucesso!")
@@ -93,9 +89,7 @@ class ContaCorrente:
             print("Valor de depósito inválido.")
 
     def sacar(self, valor):
-        """
-        Operação de Saque: Atualiza o saldo seguindo uma regra de negócio.
-        """
+        """Operação de Saque: Atualiza o saldo seguindo uma regra de negócio."""
         if 0 < valor <= self.__saldo:
             self.__saldo -= valor
             return True
@@ -104,9 +98,7 @@ class ContaCorrente:
             return False
 
     def consultar_saldo(self):
-        """
-        Operação de Consulta: Retorna o dado ao usuário sem permitir alteração direta.
-        """
+        """Operação de Consulta: Retorna o dado ao usuário sem permitir alteração direta."""
         return self.__saldo
 
 ```
