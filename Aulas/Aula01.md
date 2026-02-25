@@ -5,6 +5,11 @@ Nesta aula, exploraremos como os dados são organizados na computação para gar
 ## 1. O que é Estrutura de Dados?
 
 Na computação, a estrutura de dados consiste no modo de armazenamento e organização de dados em um computador. A correta escolha da categoria de organização impacta diretamente na performance e na velocidade que o computador, ou usuário, levará para encontrá-los.
+* **Organização e Relação:** A estrutura não é apenas o local de armazenamento (pastas, bancos de dados), mas a relação entre os dados.
+* **Alocação de Memória:**
+    * **Estática:** Ocorre na compilação; o espaço é reservado no início e liberado apenas ao fim do programa.
+    * **Dinâmica:** Ocorre durante a execução, conforme as operações são realizadas.
+* **Lixo de Memória:** É fundamental codificar a liberação de memória para evitar lentidão no sistema operacional, especialmente no Windows
 
 ### Dado vs. Informação
 
@@ -14,6 +19,8 @@ Na computação, a estrutura de dados consiste no modo de armazenamento e organi
 ## 2. Conceitos Chave de Orientação a Objetos em Python
 
 Antes de criarmos nossas estruturas complexas, precisamos entender como o Python organiza objetos. A Orientação a Objetos permite agrupar dados (atributos) e comportamentos (métodos) em um único bloco chamado **Classe**.
+
+* **Linguagens Não Tipadas:** Como o Python, elas não exigem declaração explícita de tipo. Isso traz velocidade ao programador, mas pode aumentar o consumo de memória e processamento, pois o compilador define o tipo internamente.
 
 | Termo | O que é? | Papel no Python |
 | --- | --- | --- |
@@ -34,6 +41,11 @@ Os TADs são estruturas capazes de representar tipos de dados que não foram ori
 * **Composição:** São divididos em duas camadas: uma de **dados** e outra de **operações**.
 * **Encapsulamento:** O usuário nunca tem acesso direto às variáveis, apenas às operações (funções) que as manipulam.
 * **Vantagens:** Possibilita a reutilização de código em diferentes programas e facilita a manutenção.
+
+Os TADs podem ser divididos em dois grandes grupos:
+
+* **Genéricos:** Estruturas generalistas que representam qualquer dado (ex: uma lista telefônica).
+* **Específicos:** Definidos para um domínio restrito de aplicação (ex: o sistema de `ContaCorrente`).
 
 ### Exemplo Prático: TAD Conta Corrente
 
@@ -103,7 +115,7 @@ class ContaCorrente:
 
 ```
 
-### Utilizando o TAD (Visão do Cliente)
+### Utilizando o TAD
 
 O "cliente" do TAD não precisa saber como a soma ou subtração é feita internamente, apenas como chamar as funções.
 
@@ -135,6 +147,14 @@ As pilhas são estruturas dinâmicas que contêm duas extremidades distintas: o 
 
 A pilha segue o conceito **LIFO** (*last in, first out*), onde tanto a inserção quanto a remoção são feitas pela mesma extremidade: o TOPO. O último elemento que entra é obrigatoriamente o primeiro a sair.
 
+### Aprofundamento e Cuidados
+
+* **Funcionamento Técnico:** Tanto a inserção quanto a remoção ocorrem obrigatoriamente pela mesma extremidade, o **TOPO**.
+* **Complexidade de Tempo:**
+* * **Listas:** Fornecem tempo $O(n)$ para operações de manipulação.
+* **Collections.deque:** Preferível para pilhas maiores, pois fornece complexidade $O(1)$ (mais rápida).
+* **Tratamento de Erros:** Tentar realizar um `pop()` em uma pilha vazia causará o erro `IndexError`.
+
 ### Aplicações no Cotidiano e na Computação
 
 * **Mundo Real:** Pilha de livros, pratos ou panquecas.
@@ -151,6 +171,17 @@ Em Python, a implementação de pilhas é frequentemente realizada utilizando o 
 1. **Criar Pilha:** `nome_pilha = []`.
 2. **Inserir (Push):** `append(elemento)` - Adiciona ao topo.
 3. **Remover (Pop):** `pop()` - Remove e retorna o elemento do topo.
+
+### Glossário de Pilhas em Python
+
+| Termo | Definição | Aplicação em Python |
+| --- | --- | --- |
+| **`append(e)`** | Adiciona um elemento ao final da lista.| Representa o **Empilhamento (Push)** no topo da pilha.|
+| **`pop()`** | Remove e retorna o elemento do topo da pilha.| Executa a remoção seguindo a regra **LIFO**.|
+| **`peek()`** | Operação em pilhas que permite visualizar o elemento que está no TOPO sem removê-lo.|
+| **Topo** | A extremidade onde ocorrem inserções e remoções.| Em listas Python, corresponde ao último índice.|
+| **LIFO** | <br>*Last In, First Out*.| O último `append` é o primeiro `pop`.|
+| **`deque`** | Classe do módulo `collections`. | Preferível para pilhas grandes pela performance $O(1)$. |
 
 ```python
 # Criando a pilha (TAD Lista como Pilha)
@@ -175,9 +206,40 @@ print(f"Pilha após remoção: {myStack}") # Saída: [1, 2]
 > 
 > 
 
----
-
 ## 5. Exercício de Fixação
 
 Com base no conceito de TAD visto hoje, como você estruturaria as **operações** de uma Pilha para garantir que o usuário não manipule a lista base diretamente? Pense em funções como `push(valor)`, `pop()` e `peek()` (que apenas observa o topo).
 
+class PilhaTAD:
+    def __init__(self):
+        # Encapsulamento: Lista privada para armazenar os itens
+        self.__itens = [] 
+
+    def push(self, valor):
+        """Adiciona um elemento ao topo."""
+        self.__itens.append(valor)
+
+    def pop(self):
+        """Remove e retorna o topo (LIFO)."""
+        if not self.is_empty():
+            return self.__itens.pop()
+        return "Pilha Vazia"
+
+    def peek(self):
+        """Retorna o valor do topo SEM remover."""
+        if not self.is_empty():
+            # Retorna o último elemento da lista interna [cite: 313]
+            return self.__itens[-1] 
+        return None
+
+    def is_empty(self):
+        """Verifica se a pilha está vazia[cite: 309]."""
+        return len(self.__itens) == 0
+
+# Teste
+p = PilhaTAD()
+p.push("Página A")
+p.push("Página B")
+print(f"Espiando o topo: {p.peek()}") # Saída: Página B
+print(f"Removendo: {p.pop()}")        # Saída: Página B
+print(f"Novo topo: {p.peek()}")       # Saída: Página A
