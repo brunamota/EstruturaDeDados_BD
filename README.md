@@ -4,7 +4,7 @@
 
 </div>
 
-### Análise e Desenvolvimento de Sistemas - PUC Goiás
+### Big Data - PUC Goiás
 ### Docente: Bruna Mota Barbosa
 
 ## Datas Importantes
