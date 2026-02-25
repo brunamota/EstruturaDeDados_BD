@@ -129,9 +129,6 @@ if minha_conta.sacar(30):
 print(f"Saldo final: R$ {minha_conta.consultar_saldo()}")
 
 ```
-
----
-
 ### Pontos Chave
 
 * **Encapsulamento:** O uso de `self.__saldo` protege o dado. Se tentarmos fazer `minha_conta.__saldo = 1000000` fora da classe, o Python criará uma nova variável em vez de alterar o saldo real da conta.
