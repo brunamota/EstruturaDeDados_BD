@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="500" height="190" alt="cabecalhoAC1" src="https://github.com/user-attachments/assets/305ea013-e76c-4039-85b2-22576f0c9021" />
+<img width="500" height="190" alt="cabecalhoAC2" src="https://github.com/user-attachments/assets/190586e9-d9f4-4501-950d-5555e1385675" />
 
 </div>
 
