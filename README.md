@@ -38,7 +38,8 @@
 
 ## Documentos da Disciplina
 
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> [Plano de Ensino](https://github.com/user-attachments/files/25556078/Plano_ensino_ED_ADS_2026.pdf)
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> [Plano de Ensino](https://github.com/user-attachments/files/25557081/Plano_ensino_ED_BD_2026.pdf)
+
 
 ## Aulas
 
