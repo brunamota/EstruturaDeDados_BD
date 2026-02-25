@@ -26,9 +26,8 @@
 
 ## Ferramentas utilizada na matéria
 
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> IDE - PyCharm - https://www.jetbrains.com/pt-br/idea/download/?section=windows
-
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> Java - https://www.oracle.com/technetwork/java/javase/downloads
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> IDE - PyCharm - https://www.jetbrains.com/pycharm/download/?section=windows
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> Python - https://www.python.org/downloads/
 
 ## Sololearn
 
