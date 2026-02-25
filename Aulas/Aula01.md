@@ -228,12 +228,12 @@ class PilhaTAD:
     def peek(self):
         """Retorna o valor do topo SEM remover."""
         if not self.is_empty():
-            # Retorna o último elemento da lista interna [cite: 313]
+            # Retorna o último elemento da lista interna 
             return self.__itens[-1] 
         return None
 
     def is_empty(self):
-        """Verifica se a pilha está vazia[cite: 309]."""
+        """Verifica se a pilha está vazia."""
         return len(self.__itens) == 0
 
 # Teste
