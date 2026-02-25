@@ -39,7 +39,7 @@ Os TADs são estruturas capazes de representar tipos de dados que não foram ori
 
 Imagine que precisamos desenvolver um sistema bancário. Em vez de manipular variáveis soltas pelo código, criamos um **Tipo Abstrato de Dados** que encapsula tudo o que uma conta precisa ter e fazer.
 
-#### 1. Identificação das Variáveis (O "O que é")
+#### 1. Identificação das Variáveis
 
 Nesta camada, definimos os atributos internos que o usuário **não** deve alterar manualmente:
 
@@ -47,7 +47,7 @@ Nesta camada, definimos os atributos internos que o usuário **não** deve alter
 * **CC:** Número da conta corrente (inteiro).
 * **Saldo:** Valor disponível (inteiro/real).
 
-#### 2. Identificação das Operações (O "Como funciona")
+#### 2. Identificação das Operações
 
 Nesta camada, definimos as funções que o programador "cliente" poderá usar para interagir com a conta:
 
