@@ -18,11 +18,10 @@ Antes de criarmos nossas estruturas complexas, precisamos entender como o Python
 | Termo | O que é? | Papel no Python |
 | --- | --- | --- |
 | **Classe** | O "molde" ou matriz para criar objetos.| Definida pela palavra-chave `class`.|
-| **Atributo** | Variáveis que guardam os dados do objeto (o que ele "tem").| Definidos dentro do objeto, geralmente começando com `self.`.|
+| **Atributo** | Variáveis que guardam os dados do objeto (o que ele "tem").| Definidos dentro do objeto, geralmente começando com `self`.|
 | **Método** | Funções que definem o comportamento (o que ele "faz").| Definidos usando `def` dentro da classe.|
 | **`def`** | Palavra-chave para definir uma função ou método.| Em OO, indica que estamos criando uma habilidade para o objeto.|
-| **`__init__`** | O método **Construtor** da classe.
-| Executado automaticamente ao criar o objeto para inicializar seus dados.|
+| **`__init__`** | O método **Construtor** da classe.| Executado automaticamente ao criar o objeto para inicializar seus dados.|
 | **`self`** | Referência à própria instância do objeto.| Usado para que o método saiba exatamente qual objeto ele está alterando. |
 
 ### Por que usar `self.__atributo`? (Encapsulamento)
