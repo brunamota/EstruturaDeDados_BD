@@ -119,7 +119,7 @@ class ContaCorrente:
 
 O "cliente" do TAD não precisa saber como a soma ou subtração é feita internamente, apenas como chamar as funções.
 
-```python
+``` python
 # Criando uma instância do nosso TAD
 minha_conta = ContaCorrente(agencia=123, conta=45678, saldo_inicial=100)
 
@@ -183,7 +183,7 @@ Em Python, a implementação de pilhas é frequentemente realizada utilizando o 
 | **LIFO** | <br>*Last In, First Out*.| O último `append` é o primeiro `pop`.|
 | **`deque`** | Classe do módulo `collections`. | Preferível para pilhas grandes pela performance $O(1)$. |
 
-```python
+``` python
 # Criando a pilha (TAD Lista como Pilha)
 myStack = []
 
@@ -209,7 +209,7 @@ print(f"Pilha após remoção: {myStack}") # Saída: [1, 2]
 ## 5. Exercício de Fixação
 
 Com base no conceito de TAD visto hoje, como você estruturaria as **operações** de uma Pilha para garantir que o usuário não manipule a lista base diretamente? Pense em funções como `push(valor)`, `pop()` e `peek()` (que apenas observa o topo).
-
+``` python
 class PilhaTAD:
     def __init__(self):
         # Encapsulamento: Lista privada para armazenar os itens
@@ -243,3 +243,5 @@ p.push("Página B")
 print(f"Espiando o topo: {p.peek()}") # Saída: Página B
 print(f"Removendo: {p.pop()}")        # Saída: Página B
 print(f"Novo topo: {p.peek()}")       # Saída: Página A
+
+```
