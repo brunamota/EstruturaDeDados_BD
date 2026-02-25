@@ -212,7 +212,7 @@ Com base no conceito de TAD visto hoje, como você estruturaria as **operações
 ``` python
 class PilhaTAD:
     def __init__(self):
-        # Encapsulamento: Lista privada para armazenar os itens
+        # Atributo privado: o usuário não mexe na lista diretamente
         self.__itens = [] 
 
     def push(self, valor):
@@ -223,12 +223,11 @@ class PilhaTAD:
         """Remove e retorna o topo (LIFO)."""
         if not self.is_empty():
             return self.__itens.pop()
-        return "Pilha Vazia"
+        return "Erro: Pilha Vazia"
 
     def peek(self):
-        """Retorna o valor do topo SEM remover."""
+        """ESPIAR: Retorna o valor do topo SEM remover."""
         if not self.is_empty():
-            # Retorna o último elemento da lista interna 
             return self.__itens[-1] 
         return None
 
@@ -236,12 +235,19 @@ class PilhaTAD:
         """Verifica se a pilha está vazia."""
         return len(self.__itens) == 0
 
-# Teste
+    def exibir_pilha(self):
+        """Método para printar a pilha com segurança."""
+        return f"Conteúdo da Pilha: {self.__itens}"
+
+# --- TESTANDO O CÓDIGO ---
 p = PilhaTAD()
-p.push("Página A")
-p.push("Página B")
-print(f"Espiando o topo: {p.peek()}") # Saída: Página B
-print(f"Removendo: {p.pop()}")        # Saída: Página B
-print(f"Novo topo: {p.peek()}")       # Saída: Página A
+p.push(10)
+p.push(20)
+p.push(30)
+
+print(p.exibir_pilha())      # Saída: Conteúdo da Pilha: [10, 20, 30]
+print(f"Topo: {p.peek()}")   # Saída: Topo: 30 (Apenas espiou)
+print(f"Retirou: {p.pop()}") # Saída: Retirou: 30
+print(p.exibir_pilha())      # Saída: Conteúdo da Pilha: [10, 20]
 
 ```
