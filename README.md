@@ -11,11 +11,11 @@
 
 <img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> Início das Aulas - 03/02/2026
 
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 1ª Aula Síncrona: 25/02/2026 - 20h às 21h
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 1ª Aula Síncrona: 25/02/2026 - 19h às 20h
 
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 2ª Aula Síncrona: 12/03/2026 - 20h às 21h
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 2ª Aula Síncrona: 11/03/2026 - 19h às 20h
 
-<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 3ª Aula Síncrona: 26/03/2026 - 20h às 21h
+<img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> 3ª Aula Síncrona: 25/03/2026 - 19h às 20h
 
 <img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> Avaliações Presenciais: 07/04/2026 a 11/04/2026
 
