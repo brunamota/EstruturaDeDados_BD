@@ -44,5 +44,6 @@
 ## Aulas
 
 <img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> [Aula 01 - Estruturas de Dados: Tipos Abstratos](https://github.com/brunamota/EstruturaDeDados_BD/blob/main/Aulas/Aula01.md)
+
 <img width="15" height="15" alt="iconGitAC2" src="https://github.com/user-attachments/assets/b2fb37fe-a174-4c4b-8b51-d8eb3bef9ef5" /> [Aula 02 - Estruturas de Dados Lineares: Pilhas, Filas, Deques e Listas](https://github.com/brunamota/EstruturaDeDados_BD/blob/main/Aulas/Aula02.md)
 
