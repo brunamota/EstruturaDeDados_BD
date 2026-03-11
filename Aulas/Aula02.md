@@ -416,4 +416,7 @@ aeroporto.autorizar_decolagem() # Deve autorizar o PT-XYZ
 print(f"\nAviões restantes na fila: {aeroporto.listar_espera()}")
 
 ```
-
+📝 Explicação dos Conceitos Aplicados:
+* FIFO (First In, First Out): O avião "PR-ABC" foi o primeiro adicionado, logo, foi o primeiro a ter a decolagem autorizada através do pop(0).
+* Encapsulamento: A lista __fila_espera é privada para impedir que alguém "fure a fila" alterando posições intermediárias manualmente.
+* Performance: Para sistemas com um volume massivo de dados (Big Data), recomenda-se o uso de collections.deque para que a remoção do início (popleft) tenha complexidade $O(1)$ em vez de $O(n)$ das listas comuns.
