@@ -86,57 +86,62 @@ A lista simplesmente encadeada é uma relação de elementos chamados **nodos**,
 
 ### 4.1. Estrutura Base: Nodo e Lista
 
-Antes das operações, definimos a estrutura do **Nodo** (que guarda o dado e o elo) e da **Lista** (que guarda a referência do início).
+Antes das operações, definimos a estrutura do **Nodo** (que guarda o dado e o elo) e da **Lista** (que guarda a referência do início). Nesta implementação otimizada, usamos dataclasses para simplificar o Nodo e métodos para que a lista se comporte como uma lista nativa do Python.
 
 ```python
+from dataclasses import dataclass
+from typing import Any, Optional
+
+@dataclass
 class Nodo:
-    def __init__(self, dado=0, proximo_nodo=None):
-        # Armazena o conteúdo (pode ser primitivo ou objeto)
-        self.conteudo = dado
-        # Armazena o endereço/ponteiro para o próximo elemento
-        self.proximo = proximo_nodo
+    conteudo: Any
+    proximo: Optional['Nodo'] = None
+
 class ListaEncadeada:
     def __init__(self):
-        # A lista nasce vazia, com o ponteiro de início apontando para None 
         self.inicio = None
+        self._tamanho = 0  # Controle de tamanho O(1)
 ```
+
+- @dataclass: Em Python, o método __init__ costuma ser repetitivo. A @dataclass gera automaticamente o construtor, o __repr__ (exibição para debug) e comparadores. Isso reduz o código visual e foca no que importa: os dados.
+
+- typing (Any, Optional): Python é uma linguagem dinamicamente tipada, o que pode causar confusão em estruturas de ponteiros. Usar Any indica que o nodo aceita qualquer dado, e Optional['Nodo'] deixa explícito que o campo proximo pode ser um objeto ou None. Isso ajuda ferramentas de autocompletar e evita erros de "ponteiro nulo".
 
 ### 4.2. Operações de Inserção
 
 * **Adicionar no Início:** O novo nodo aponta para o atual `inicio`, e a lista passa a ter esse novo nodo como primeiro elemento.
 * **Adicionar no Fim:** Percorremos a lista com um laço `while` até encontrar o último elemento (cujo `proximo` é `None`) e conectamos o novo nodo ali.
 * **Adicionar em Posição Específica:** Navegamos até a posição anterior à desejada e ajustamos os ponteiros para "abrir espaço" e inserir o novo elo.
+* A grande diferença aqui é o Encapsulamento. O usuário da lista não precisa saber que a classe Nodo existe; ele apenas envia o valor, e a lista gerencia a criação dos elos internamente.
 
 ```python
- def adicionar_inicio(self, novo_nodo):
-        """O novo nodo aponta para o atual início e assume o posto de primeiro"""
-        novo_nodo.proximo = self.inicio
-        self.inicio = novo_nodo
+def adicionar_inicio(self, valor):
+        # Cria o novo nodo apontando para o antigo início
+        self.inicio = Nodo(valor, self.inicio)
+        self._tamanho += 1
 
-    def adicionar_fim(self, novo_nodo):
-        """Percorre até o último elemento e conecta o novo nodo ali."""
+    def adicionar_fim(self, valor):
         if self.esta_vazia():
-            self.inicio = novo_nodo
-        else:
-            aux = self.inicio
-            while aux.proximo is not None:
-                aux = aux.proximo
-            aux.proximo = novo_nodo
-
-    def adicionar_posicao(self, novo_nodo, pos):
-        """Navega até a posição anterior e ajusta os elos para inserir o novo."""
-        if pos == 0:
-            self.adicionar_inicio(novo_nodo)
+            self.adicionar_inicio(valor)
         else:
             atual = self.inicio
-            pos_atual = 0
-            while atual is not None and pos_atual < (pos - 1):
+            while atual.proximo:
                 atual = atual.proximo
-                pos_atual += 1
+            atual.proximo = Nodo(valor)
+            self._tamanho += 1
 
-            if atual is not None:
-                novo_nodo.proximo = atual.proximo
-                atual.proximo = novo_nodo
+    def adicionar_posicao(self, valor, pos):
+        if pos <= 0:
+            self.adicionar_inicio(valor)
+        elif pos >= self._tamanho:
+            self.adicionar_fim(valor)
+        else:
+            atual = self.inicio
+            for _ in range(pos - 1):
+                atual = atual.proximo
+            # Insere o novo nodo entre 'atual' e 'atual.proximo'
+            atual.proximo = Nodo(valor, atual.proximo)
+            self._tamanho += 1
 
 ```
 
@@ -148,38 +153,23 @@ class ListaEncadeada:
 
 ```python
     def remover_inicio(self):
-        """Atualiza o início para o segundo elemento da lista"""
         if not self.esta_vazia():
             self.inicio = self.inicio.proximo
-
-    def remover_fim(self):
-        """Percorre até o penúltimo nodo e remove o elo com o último"""
-        if self.esta_vazia():
-            return
-        if self.inicio.proximo is None:
-            self.inicio = None
-        else:
-            atual = self.inicio
-            while atual.proximo.proximo is not None:
-                atual = atual.proximo
-            atual.proximo = None
+            self._tamanho -= 1
 
     def remover_posicao(self, pos):
-        """Localiza o anterior e 'pula' o nodo da posição desejada"""
-        if self.esta_vazia():
-            return
+        if self.esta_vazia(): return
         if pos == 0:
             self.remover_inicio()
         else:
             atual = self.inicio
-            pos_atual = 0
-            while atual.proximo is not None and pos_atual < (pos - 1):
+            for _ in range(pos - 1):
+                if atual.proximo is None: break
                 atual = atual.proximo
-                pos_atual += 1
-
-            if atual.proximo is not None:
-                proximo_nodo = atual.proximo.proximo
-                atual.proximo = proximo_nodo
+            
+            if atual.proximo:
+                atual.proximo = atual.proximo.proximo
+                self._tamanho -= 1
 
 ```
 
@@ -188,157 +178,59 @@ class ListaEncadeada:
 * **Verificar se está Vazia:** Retorna `True` se o ponteiro de `inicio` for `None`.
 * **Tamanho da Lista:** Iniciamos um contador em zero e percorremos todos os nodos incrementando o valor até chegar ao fim.
 * **Contar Ocorrências:** Percorre a lista comparando o conteúdo de cada nodo com o valor buscado, somando cada vez que houver uma igualdade.
+* Em vez de criar métodos como lista.contar_elementos(), usamos os Protocolos do Python. Isso faz com que nossa lista encadeada se comporte como uma lista nativa da linguagem.Por que usar Métodos "Mágicos"?Eles permitem que funções nativas do Python (como len(), print() e in) entendam como interagir com a sua estrutura personalizada.
+    * __len__: Faz com que len(lista) funcione instantaneamente. Como mantemos o atributo _tamanho, não precisamos percorrer a lista toda para contar (otimização de $O(n)$ para $O(1)$).
+    * __iter__: Transforma a lista em um Iterável. Ao usar yield, permitimos que qualquer loop for percorra a lista sem expor os ponteiros internos.
+    * __str__: Define como a lista aparece ao ser impressa.
 
 ```python
-    def esta_vazia(self):
-        """Retorna True se o ponteiro de início for None."""
+   def esta_vazia(self):
         return self.inicio is None
 
-    def tamanho(self):
-        """Percorre a lista contando os nodos até encontrar None."""
+    def __len__(self):
+        """Retorna o tamanho da lista usando len(lista)"""
+        return self._tamanho
+
+    def __iter__(self):
+        """Permite percorrer a lista com 'for item in lista'"""
         atual = self.inicio
-        cont = 0
-        while atual is not None:
-            cont += 1
+        while atual:
+            yield atual.conteudo
             atual = atual.proximo
-        return cont
 
     def contar_ocorrencias(self, valor):
-        """Percorre a lista somando cada vez que o valor é encontrado"""
-        atual = self.inicio
-        total = 0
-        while atual is not None:
-            if atual.conteudo == valor:
-                total += 1
-            atual = atual.proximo
-        return total
+        """Usa a iteração nativa para contar"""
+        return sum(1 for item in self if item == valor)
+
+    def __str__(self):
+        """Representação visual automática com print(lista)"""
+        return " -> ".join(map(str, self)) + " -> None"
 ```
 
-### 4.4. Implementação Completa
+### 4.4. Teste Prático
+
+Ao usar esses padrões, seu código se torna "Pythonico": ele é limpo, eficiente e segue as convenções que desenvolvedores experientes utilizam em projetos reais, indo além do básico acadêmico.
 
 ```python
-class Nodo:
-    def __init__(self, dado=0, proximo_nodo=None):
-        self.conteudo = dado
-        self.proximo = proximo_nodo
-
-
-class ListaEncadeada:
-    def __init__(self):
-        self.inicio = None
-
-    # OPERAÇÕES DE CONSULTA
-    def esta_vazia(self):
-        """Retorna True se o ponteiro de início for None."""
-        return self.inicio is None
-
-    def tamanho(self):
-        """Percorre a lista contando os nodos até encontrar None."""
-        atual = self.inicio
-        cont = 0
-        while atual is not None:
-            cont += 1
-            atual = atual.proximo
-        return cont
-
-    def contar_ocorrencias(self, valor):
-        """Percorre a lista somando cada vez que o valor é encontrado"""
-        atual = self.inicio
-        total = 0
-        while atual is not None:
-            if atual.conteudo == valor:
-                total += 1
-            atual = atual.proximo
-        return total
-
-    # --- OPERAÇÕES DE INSERÇÃO ---
-    def adicionar_inicio(self, novo_nodo):
-        """O novo nodo aponta para o atual início e assume o posto de primeiro."""
-        novo_nodo.proximo = self.inicio
-        self.inicio = novo_nodo
-
-    def adicionar_fim(self, novo_nodo):
-        """Percorre até o último elemento e conecta o novo nodo ali"""
-        if self.esta_vazia():
-            self.inicio = novo_nodo
-        else:
-            aux = self.inicio
-            while aux.proximo is not None:
-                aux = aux.proximo
-            aux.proximo = novo_nodo
-
-    def adicionar_posicao(self, novo_nodo, pos):
-        """Navega até a posição anterior e ajusta os elos para inserir o novo."""
-        if pos == 0:
-            self.adicionar_inicio(novo_nodo)
-        else:
-            atual = self.inicio
-            pos_atual = 0
-            while atual is not None and pos_atual < (pos - 1):
-                atual = atual.proximo
-                pos_atual += 1
-
-            if atual is not None:
-                novo_nodo.proximo = atual.proximo
-                atual.proximo = novo_nodo
-
-    # --- OPERAÇÕES DE REMOÇÃO ---
-
-    def remover_inicio(self):
-        """Atualiza o início para o segundo elemento da lista"""
-        if not self.esta_vazia():
-            self.inicio = self.inicio.proximo
-
-    def remover_fim(self):
-        """Percorre até o penúltimo nodo e remove o elo com o último"""
-        if self.esta_vazia():
-            return
-        if self.inicio.proximo is None:
-            self.inicio = None
-        else:
-            atual = self.inicio
-            while atual.proximo.proximo is not None:
-                atual = atual.proximo
-            atual.proximo = None
-
-    def remover_posicao(self, pos):
-        """Localiza o anterior e 'pula' o nodo da posição desejada"""
-        if self.esta_vazia():
-            return
-        if pos == 0:
-            self.remover_inicio()
-        else:
-            atual = self.inicio
-            pos_atual = 0
-            while atual.proximo is not None and pos_atual < (pos - 1):
-                atual = atual.proximo
-                pos_atual += 1
-
-            if atual.proximo is not None:
-                proximo_nodo = atual.proximo.proximo
-                atual.proximo = proximo_nodo
-
-    def imprimir(self):
-        atual = self.inicio
-        elementos = []
-        while atual:
-            elementos.append(str(atual.conteudo))
-            atual = atual.proximo
-        print(" -> ".join(elementos) + " -> None")
-
-
-# --- TESTE PRÁTICO ---
+# Instanciação
 lista = ListaEncadeada()
-lista.adicionar_inicio(Nodo("B"))
-lista.adicionar_inicio(Nodo("A"))  # A -> B
-lista.adicionar_fim(Nodo("C"))  # A -> B -> C
-lista.adicionar_posicao(Nodo("X"), 1)  # A -> X -> B -> C
 
-print(f"Tamanho: {lista.tamanho()}")  # Saída: 4
-lista.imprimir()
+# Inserção direta de valores (sem precisar instanciar Nodo manualmente)
+lista.adicionar_inicio("B")
+lista.adicionar_inicio("A")     # A -> B
+lista.adicionar_fim("C")        # A -> B -> C
+lista.adicionar_posicao("X", 1) # A -> X -> B -> C
 
-lista.remover_posicao(1)  # Remove "X"
-lista.imprimir()  # Saída: A -> B -> C -> None
+# Consulta e Impressão
+print(f"Tamanho: {len(lista)}") # Usa o método __len__
+print(lista)                    # Usa o método __str__ (Saída: A -> X -> B -> C -> None)
+
+# Busca nativa (funciona por causa do __iter__)
+print(f"Existe 'B'? {'B' in lista}") 
+
+# Remoção
+lista.remover_posicao(1)        # Remove "X"
+print(lista)                    # Saída: A -> B -> C -> None
 
 ```
 
